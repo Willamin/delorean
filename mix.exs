@@ -29,7 +29,7 @@ defmodule Delorean.Mixfile do
   defp package do
    [
     name: :delorean,
-    files: ~[lib mix.exs README.md LICENSE.md],
+    files: ~S[lib mix.exs README.md LICENSE.md],
     maintainers: ["Will Lewis"],
     licenses: ["MIT"],
     links: %{"GitHub" => "https://github.com/willamin/delorean"}]
