@@ -1,10 +1,8 @@
 # Delorean
 
-**TODO: Add description**
+See tests for examples on how to use Delorean for time traveling.
 
 ## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
 
   1. Add `delorean` to your list of dependencies in `mix.exs`:
 
@@ -22,3 +20,10 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
     end
     ```
 
+## TODO
+
+- Add support for time
+- Add support for datetime
+- Add tests for the non-bang `Delorean.travel/2`
+- Add real-life examples
+- Provide a more robust readme
