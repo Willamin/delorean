@@ -17,21 +17,11 @@ defmodule Delorean do
   end
 
   def compare(date1, date2) do
-    year = compare_map_key(date1, date2, :year)
-    if year == 0 do
-      month = compare_map_key(date1, date2, :month)
-      if month == 0 do
-        day = compare_map_key(date1, date2, :day)
-        if day == 0 do
-          0
-        else
-          day
-        end
-      else
-        month
-      end
-    else
-      year
+    with 0 <- compare_map_key(date1, date2, :year),
+      0 <- compare_map_key(date1, date2, :month),
+      0 <- compare_map_key(date1, date2, :day)
+    do
+      0
     end
   end
 
