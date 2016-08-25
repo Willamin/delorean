@@ -33,6 +33,10 @@ defmodule DeloreanTest do
     |> Delorean.travel!(day: -9)
   end
 
+  test "that we can compare dates properly" do
+    assert Delorean.compare!(~D[1955-11-21], ~D[1985-10-12]) == -1
+  end
+
   def today do
     ~D[1985-10-21]
   end
