@@ -33,8 +33,16 @@ defmodule DeloreanTest do
     |> Delorean.travel!(day: -9)
   end
 
-  test "that we can compare dates properly" do
+  test "that we can compare dates properly when they are before" do
     assert Delorean.compare(~D[1955-11-21], ~D[1985-10-12]) == -1
+  end
+
+  test "that we can compare dates properly when they are after" do
+    assert Delorean.compare(~D[1985-10-12], ~D[1955-11-21]) == 1
+  end
+
+  test "that we can compare dates properly when they are identical" do
+    assert Delorean.compare(~D[1985-10-12], ~D[1985-10-12]) == 0
   end
 
   def today do
