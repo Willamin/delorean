@@ -8,7 +8,7 @@ See tests for examples on how to use Delorean for time traveling.
 
     ```elixir
     def deps do
-      [{:delorean, "~> 0.1.0"}]
+      [{:delorean, "~> 1.0.0"}]
     end
     ```
 
