@@ -3,7 +3,7 @@ defmodule Delorean.Mixfile do
 
   def project do
     [app: :delorean,
-     version: "1.2.0",
+     version: "1.3.0",
      elixir: "~> 1.3",
      package: package(),
      description: description(),
