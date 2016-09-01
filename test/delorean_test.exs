@@ -45,12 +45,34 @@ defmodule DeloreanTest do
     assert Delorean.compare(~D[1985-10-12], ~D[1985-10-12]) == 0
   end
 
-  test "that dates properly cascade when overflowing" do
+  test "that dates properly cascade when overflowing days compared to month going forward" do
     assert Delorean.compare(
       Delorean.travel!(today, month: 1),
       Delorean.travel!(today, day: 31)
     ) == 0
   end
+
+  test "that dates properly cascade when overflowing days compared to year going forward" do
+    assert Delorean.compare(
+      Delorean.travel!(today, year: 1),
+      Delorean.travel!(today, day: 365)
+    ) == 0
+  end
+
+  test "that dates properly cascade when overflowing days compared to month going backward" do
+    assert Delorean.compare(
+      Delorean.travel!(today, month: -1),
+      Delorean.travel!(today, day: -30)
+    ) == 0
+  end
+
+  test "that dates properly cascade when overflowing days compared to year going backward" do
+    assert Delorean.compare(
+      Delorean.travel!(today, year: -1),
+      Delorean.travel!(today, day: -365)
+    ) == 0
+  end
+
 
   def today do
     ~D[1985-10-21]

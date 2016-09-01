@@ -1,16 +1,28 @@
 defmodule Delorean do
   import FluxCapacitor
 
-  def travel(present, day: day) do
-    cascade({present.year, present.month, present.day + day}) |> Date.from_erl
+  def travel(present, day: day) when day > 0 do
+    cascade_forward({present.year, present.month, present.day + day}) |> Date.from_erl
   end
 
-  def travel(present, month: month) do
-    cascade({present.year, present.month + month, present.day}) |> Date.from_erl
+  def travel(present, month: month) when month > 0 do
+    cascade_forward({present.year, present.month + month, present.day}) |> Date.from_erl
   end
 
-  def travel(present, year: year) do
-    cascade({present.year + year, present.month, present.day}) |> Date.from_erl
+  def travel(present, year: year) when year > 0 do
+    cascade_forward({present.year + year, present.month, present.day}) |> Date.from_erl
+  end
+
+  def travel(present, day: day) when day < 0 do
+    cascade_backward({present.year, present.month, present.day + day}) |> Date.from_erl
+  end
+
+  def travel(present, month: month) when month < 0 do
+    cascade_backward({present.year, present.month + month, present.day}) |> Date.from_erl
+  end
+
+  def travel(present, year: year) when year < 0 do
+    cascade_backward({present.year + year, present.month, present.day}) |> Date.from_erl
   end
 
   def travel!(present, opts) do

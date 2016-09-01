@@ -1,14 +1,15 @@
 defmodule FluxCapacitor do
 
-  def cascade(date, changes \\ {0, 0, 0}) do
+  def cascade_forward(date, changes \\ {0, 0, 0}) do
+    debug(date, changes, "for")
     if invalid? date do
       if (date |> elem(1) |> valid_month?) do
-        cascade(
+        cascade_forward(
           add_tuples(date, {0, 0, -1}),
           add_tuples(changes, {0, 0, 1})
         )
       else
-        cascade(
+        cascade_forward(
           add_tuples(date, {1, -12, 0}),
           changes
         )
@@ -18,16 +19,53 @@ defmodule FluxCapacitor do
         date
       else
         if ceiling_day? date do
-          cascade(
+          cascade_forward(
             date
             |> add_tuples({0, 1, 0})
             |> put_elem(2, 1),
             add_tuples(changes, {0, 0, -1})
           )
         else
-          cascade(
+          cascade_forward(
             add_tuples(date, {0, 0, 1}),
             add_tuples(changes, {0, 0, -1})
+          )
+        end
+      end
+    end
+  end
+
+  def cascade_backward(date, changes \\ {0, 0, 0}) do
+    debug(date, changes, "back")
+    if invalid? date do
+      if (date |> elem(1) |> valid_month?) do
+        cascade_backward(
+          add_tuples(date, {0, 0, 1}),
+          add_tuples(changes, {0, 0, -1})
+        )
+      else
+        cascade_backward(
+          add_tuples(date, {-1, +12, 30}),
+          changes
+        )
+      end
+    else
+      if changes == {0, 0, 0} do
+        date
+      else
+        if floor_day? date do
+          new_date =
+            date
+            |> add_tuples({0, -1, 0})
+          cascade_backward(
+            new_date
+            |> put_elem(2, (last_day_of_month(new_date))),
+            add_tuples(changes, {0, 0, 1})
+          )
+        else
+          cascade_backward(
+            add_tuples(date, {0, 0, -1}),
+            add_tuples(changes, {0, 0, 1})
           )
         end
       end
@@ -37,6 +75,20 @@ defmodule FluxCapacitor do
   # have we reached the ceiling of days in this particular month?
   def ceiling_day?(date) do
     invalid? add_tuples date, {0, 0, 1}
+  end
+
+  # have we reached the ceiling of days in this particular month?
+  def floor_day?(date) do
+    invalid? add_tuples date, {0, 0, -1}
+  end
+
+  def last_day_of_month(date, attempt \\ 1) do
+    trial_date = date |> put_elem(2, attempt)
+    if ceiling_day? trial_date do
+      attempt
+    else
+      last_day_of_month(date, attempt + 1)
+    end
   end
 
   def invalid?(date) do
@@ -63,5 +115,18 @@ defmodule FluxCapacitor do
     |> List.to_tuple
   end
 
+  def debug(date, changes, extra \\ "", output \\ false) do
+    if output do
+      IO.write "[DEBUG]: "
+      IO.write inspect(date)
+      IO.write "..."
+      IO.write inspect(changes)
+      if String.length(extra) > 0 do
+        IO.write "..." <> extra
+      end
+      IO.puts ""
+      Process.sleep(50)
+    end
+  end
 
 end
