@@ -1,5 +1,11 @@
 # Delorean
 
+[![Hex.pm](https://img.shields.io/hexpm/v/delorean.svg)](https://hex.pm/packages/delorean)
+[![Hex.pm](https://img.shields.io/hexpm/l/delorean.svg)](http://choosealicense.com/licenses/mit/)
+[![Hex.pm](https://img.shields.io/hexpm/dt/delorean.svg)](https://hex.pm/packages/delorean)
+[![Inline docs](http://inch-ci.org/github/Willamin/delorean.svg)](http://inch-ci.org/github/Willamin/delorean)
+
+
 See tests for examples on how to use Delorean for time traveling.
 
 ## Installation
